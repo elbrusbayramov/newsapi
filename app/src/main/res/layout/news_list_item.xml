@@ -41,7 +41,7 @@
             android:fontFamily="sans-serif-medium"
             android:maxLines="1"
             android:textAllCaps="true"
-            android:textColor="@color/textColorDetails"
+            android:textColor="@color/textColorAgentName"
             android:textSize="12sp"
             tools:text="BBC news" />
 
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
-            android:textColor="@color/textColorEarthquakeLocation"
+            android:textColor="@color/textColorDescription"
             android:textSize="16sp"
             tools:text="Long placeholder location that should wrap to more than 2 lines of text" />
 
@@ -70,7 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:textColor="@color/textColorDetails"
+            android:textColor="@color/textColorAgentName"
             android:textSize="12sp"
             tools:text="Mar 6, 2018" />
 
@@ -79,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:textColor="@color/textColorDetails"
+            android:textColor="@color/textColorAgentName"
             android:textSize="12sp"
             tools:text="3:00 PM" />
 
