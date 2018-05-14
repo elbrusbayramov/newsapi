@@ -3,6 +3,7 @@ package com.example.elbrus.newsapi;
 public class News {
 
     private String agentName;
+    private String title;
     private String description;
     private String publishedTime;
     private String url;
@@ -13,6 +14,14 @@ public class News {
 
     public void setAgentName(String agentName) {
         this.agentName = agentName;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
@@ -39,10 +48,11 @@ public class News {
         this.url = url;
     }
 
-    public News(String agentName, String description, String publishedTime, String url) {
+    public News(String agentName, String title,String description, String publishedTime, String url) {
         this.agentName = agentName;
         this.description = description;
         this.publishedTime = publishedTime;
         this.url = url;
+        this.title = title;
     }
 }

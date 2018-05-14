@@ -62,16 +62,16 @@ public class NewsAdapter extends ArrayAdapter<News> {
         descriptionView.setText(currentNews.getDescription());
 
         // Create a new Date object from the time in milliseconds of the earthquake
-        Date dateObject = new Date(currentNews.getPublishedTime());
+//        Date dateObject = new Date(currentNews.getPublishedTime());
 
         // Find the TextView with view ID date
         TextView dateView = (TextView) listItemView.findViewById(R.id.date);
 
-        dateView.setText(formatDate(dateObject));
+//        dateView.setText(formatDate(dateObject));
 
         // Find the TextView with view ID time
         TextView timeView = (TextView) listItemView.findViewById(R.id.time);
-        timeView.setText(formatTime(dateObject));
+//        timeView.setText(formatTime(dateObject));
 
 // Return the list item view that is now showing the appropriate data
         return listItemView;
