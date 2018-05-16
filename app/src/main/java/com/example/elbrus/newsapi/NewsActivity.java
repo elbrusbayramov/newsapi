@@ -5,11 +5,15 @@ import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -19,7 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<List<News>> {
+public class NewsActivity extends AppCompatActivity implements
+        LoaderCallbacks<List<News>>, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String LOG_TAG = NewsActivity.class.getName();
 
@@ -65,6 +70,12 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
         newsListView.setAdapter(adapter);
+
+        // Obtain a reference to the SharedPreferences file for this app
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        // And register to be notified of preference changes
+        // So we know when the user has adjusted the query settings
+        prefs.registerOnSharedPreferenceChangeListener(this);
 
 
         // Set an item click listener on the ListView, which sends an intent to a web browser
@@ -115,8 +126,15 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
 
     @Override
     public Loader<List<News>> onCreateLoader(int id, Bundle args) {
+
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String sources = sharedPrefs.getString(
+                getString(R.string.settings_sources),
+                getString(R.string.settings_sources_default));
+
         Uri baseUri = Uri.parse(NEWS_REQUEST_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
+        uriBuilder.appendQueryParameter("sources", sources);
 
         return new NewsLoader(this, uriBuilder.toString());
     }
@@ -144,5 +162,43 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
     @Override
     public void onLoaderReset(Loader<List<News>> loader) {
         adapter.clear();
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+
+        if (key.equals(getString(R.string.settings_sources))) {
+            // Clear the ListView as a new query will be kicked off
+            adapter.clear();
+
+            // Hide the empty state text view as the loading indicator will be displayed
+            emptyStateTextView.setVisibility(View.GONE);
+
+            // Show the loading indicator while new data is being fetched
+            View loadingIndicator = findViewById(R.id.loading_indicator);
+            loadingIndicator.setVisibility(View.VISIBLE);
+
+            // Restart the loader to requery the newsapi.org as the query settings have been updated
+            getLoaderManager().restartLoader(NEWS_LOADER_ID, null, this);
+        }
+
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsIntent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
