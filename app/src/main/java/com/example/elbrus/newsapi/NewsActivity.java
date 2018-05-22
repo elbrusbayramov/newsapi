@@ -29,7 +29,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
     private static final String NEWS_REQUEST_URL =
             "https://newsapi.org/v2/top-headlines?" +
                     "country=us&" +
-                    "apiKey=ba9aa3f9e5cf472b8d9c8eae8ccf6d98";
+                    "apiKey=226dbcd99cd5485398d2b13698f19a88";
     /**
      * Constant value for the news loader ID. We can choose any integer.
      * This really only comes into play if you're using multiple loaders.
