@@ -5,11 +5,15 @@ import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -28,7 +32,6 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
      */
     private static final String NEWS_REQUEST_URL =
             "https://newsapi.org/v2/top-headlines?" +
-                    "country=us&" +
                     "apiKey=226dbcd99cd5485398d2b13698f19a88";
     /**
      * Constant value for the news loader ID. We can choose any integer.
@@ -115,8 +118,17 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
 
     @Override
     public Loader<List<News>> onCreateLoader(int id, Bundle args) {
+
+
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        String agency = sharedPrefs.getString(
+                getString(R.string.settings_choose_by_key),
+                getString(R.string.settings_choose_by_default));
+
         Uri baseUri = Uri.parse(NEWS_REQUEST_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
+        uriBuilder.appendQueryParameter("sources", agency);
 
         return new NewsLoader(this, uriBuilder.toString());
     }
@@ -144,5 +156,23 @@ public class NewsActivity extends AppCompatActivity implements LoaderCallbacks<L
     @Override
     public void onLoaderReset(Loader<List<News>> loader) {
         adapter.clear();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsIntent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

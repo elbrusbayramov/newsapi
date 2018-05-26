@@ -2,7 +2,22 @@
     <string name="app_name">NewsApi</string>
     <!-- Error message when there is no internet connectivity [CHAR LIMIT=NONE] -->
     <string name="no_internet_connection">No internet connection.</string>
-    <!-- Text to display in the list when there are no earthquakes [CHAR LIMIT=NONE] -->
     <string name="no_news">No news found.</string>
+    <string name="settings_menu_item">Settings</string>
+    <string name="settings_title">Settings</string>
+    <string name="settings_choose_agent">Agency</string>
+    <string name="title_activity_settings2">Settings</string>
+
+    <string name="settings_choose_by_key" translatable="false">agency</string>
+
+    <string name="settings_choose_by_label">Agency</string>
+    <string name="settings_choose_by_default" translatable="false">@string/settings_choose_the_washington_post_value</string>
+
+    <string name="settings_choose_the_washington_post">The washington post</string>
+    <string name="settings_choose_the_washington_post_value" translatable="false">the-washington-post</string>
+
+    <string name="settings_choose_cnn">CNN </string>
+    <string name="settings_choose_cnn_value" translatable="false">cnn</string>
+
 
 </resources>
