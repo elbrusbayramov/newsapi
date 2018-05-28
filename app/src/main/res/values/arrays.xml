@@ -13,10 +13,13 @@
 -->
 
 <resources>
-    <string-array name="settings_select_by_labels">
-        <item>@string/settings_source_bbc_news</item>
-        <item>@string/settings_source_the_washington_post</item>
+    <string-array name="settings_choose_by_labels">
+        <item>@string/settings_choose_the_washington_post</item>
+        <item>@string/settings_choose_cnn</item>
     </string-array>
 
-
+    <string-array name="settings_choose_by_values">
+        <item>@string/settings_choose_the_washington_post_value</item>
+        <item>@string/settings_choose_cnn_value</item>
+    </string-array>
 </resources>

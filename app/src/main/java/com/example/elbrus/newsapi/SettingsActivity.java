@@ -1,46 +1,37 @@
+/*
+ * Copyright (C) 2016 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.example.elbrus.newsapi;
 
-import android.annotation.TargetApi;
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
-import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.preference.RingtonePreference;
-import android.text.TextUtils;
-import android.view.MenuItem;
+import android.support.v7.app.AppCompatActivity;
 
-import java.util.List;
+public class SettingsActivity extends AppCompatActivity {
 
-/**
- * A {@link PreferenceActivity} that presents a set of application settings. On
- * handset devices, settings are presented as a single list. On tablets,
- * settings are split by category, with category headers shown to the left of
- * the list of settings.
- * <p>
- * See <a href="http://developer.android.com/design/patterns/settings.html">
- * Android Design: Settings</a> for design guidelines and the <a
- * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
- * API Guide</a> for more information on developing a Settings UI.
- */
-public class SettingsActivity extends AppCompatPreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
     }
 
-    public static class NewsPreferenceFragment extends PreferenceFragment
+    public static class EarthquakePreferenceFragment extends PreferenceFragment
             implements Preference.OnPreferenceChangeListener {
 
         @Override
@@ -48,9 +39,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.settings_main);
 
-            Preference sources = findPreference(getString(R.string.settings_sources));
-            bindPreferenceSummaryToValue(sources);
 
+            Preference orderBy = findPreference(getString(R.string.settings_choose_by_key));
+            bindPreferenceSummaryToValue(orderBy);
         }
 
         @Override
@@ -70,7 +61,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
 
         private void bindPreferenceSummaryToValue(Preference preference) {
-            preference.setOnPreferenceChangeListener(this);
+           preference.setOnPreferenceChangeListener(this);
             SharedPreferences preferences =
                     PreferenceManager.getDefaultSharedPreferences(preference.getContext());
             String preferenceString = preferences.getString(preference.getKey(), "");
